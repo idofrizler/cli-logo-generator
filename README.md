@@ -10,16 +10,20 @@ Create beautiful terminal banners like Claude Code, GitHub Copilot CLI, and Gemi
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ```
-        ██████████████
-     ████████████████████
-    ██████████████████████
-   ████████████████████████
-    ██████████████████████
-     ████████████████████
-        ██████████████
+         █▓▓▒▒▓▓█                 
+       █▒░       ▒█               
+     █▒   ░░░░░░   ▒█             
+     █░  ▒▓▓▓▓▓▓▒░  █             
+      █░ ▒▓▓▓█▓▒▒░░▓              
+       █▒▒▒▒▓▓▒▒▒▒▒               
+        █▓▓█▓▓▓▓▓▒▓               
+         ▓▓▒▒▒░░▒▓                
+         █▓▓▓▓▓▒▒▓                
+  █     █▓▒▓▓▓▒▒▒▒█        ███    
+  ███  ██▓▒▒▒▒▒▒▒░░▓███    █▓█    
 
-   MyCLI v1.0.0
-   Your awesome CLI tool
+  Borat CLI v1.0.0
+  Very nice!
 ```
 
 [Installation](#installation) •
@@ -120,32 +124,31 @@ cli-logo init ./logo.png mycli --shell /bin/zsh
 
 ## Examples
 
-### Create a development environment CLI
+### Create a branded CLI
 
 ```bash
-cli-logo init ./company-logo.png devbox \
-  -t "DevBox" \
-  -v "3.0.0" \
-  --subtitle "Your development environment" \
-  -w 50 \
-  -b
+cli-logo init ./borat.jpeg borat \
+  -t "Borat CLI" \
+  -v "1.0.0" \
+  --subtitle "Very nice!" \
+  -w 40
 
-sudo cp devbox.sh /usr/local/bin/devbox
+sudo cp borat.sh /usr/local/bin/borat
 ```
 
-Now when you run `devbox`:
+Now when you run `borat`:
 
 ```
-     ████████████████████
-   ██████████████████████████
-  ████████████████████████████
-  ████████  ████████  ████████
-  ████████████████████████████
-   ██████████████████████████
-     ████████████████████
+       █▓▓▒▒▓▓█                 
+     █▒░       ▒█               
+   █▒   ░░░░░░   ▒█             
+   █░  ▒▓▓▓▓▓▓▒░  █             
+    █░ ▒▓▓▓█▓▒▒░░▓              
+     █▒▒▒▒▓▓▒▒▒▒▒               
+      █▓▓█▓▓▓▓▓▒▓               
 
-DevBox v3.0.0
-Your development environment
+Borat CLI v1.0.0
+Very nice!
 
 $ █
 ```
