@@ -9,22 +9,7 @@ Create beautiful terminal banners like Claude Code, GitHub Copilot CLI, and Gemi
 [![npm version](https://img.shields.io/npm/v/cli-logo-generator.svg)](https://www.npmjs.com/package/cli-logo-generator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-```
-         █▓▓▒▒▓▓█                 
-       █▒░       ▒█               
-     █▒   ░░░░░░   ▒█             
-     █░  ▒▓▓▓▓▓▓▒░  █             
-      █░ ▒▓▓▓█▓▒▒░░▓              
-       █▒▒▒▒▓▓▒▒▒▒▒               
-        █▓▓█▓▓▓▓▓▒▓               
-         ▓▓▒▒▒░░▒▓                
-         █▓▓▓▓▓▒▒▓                
-  █     █▓▒▓▓▓▒▒▒▒█        ███    
-  ███  ██▓▒▒▒▒▒▒▒░░▓███    █▓█    
-
-  Borat CLI v1.0.0
-  Very nice!
-```
+![Borat CLI](./borat-cli.png)
 
 [Installation](#installation) •
 [Quick Start](#quick-start) •
