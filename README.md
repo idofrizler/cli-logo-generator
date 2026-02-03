@@ -6,7 +6,6 @@
 
 Create beautiful terminal banners like Claude Code, GitHub Copilot CLI, and Gemini CLI.
 
-[![npm version](https://img.shields.io/npm/v/cli-logo-generator.svg)](https://www.npmjs.com/package/cli-logo-generator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ![Borat CLI](./borat-cli.png)
@@ -33,12 +32,10 @@ Create beautiful terminal banners like Claude Code, GitHub Copilot CLI, and Gemi
 ## Installation
 
 ```bash
-npm install -g cli-logo-generator
-```
-
-Or use with npx:
-```bash
-npx cli-logo-generator ./logo.png
+git clone https://github.com/idofrizler/cli-logo-generator.git
+cd cli-logo-generator
+npm install
+npm link  # Makes 'cli-logo' available globally
 ```
 
 ## Quick Start
