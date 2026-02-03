@@ -34,6 +34,60 @@ function rgbToAnsiTrue(r, g, b) {
 // Reset ANSI color
 const RESET = '\x1b[0m';
 
+// Flood fill to find background pixels (connected to edges)
+function findBackgroundPixels(data, width, height, bgThreshold) {
+  const isBackground = new Uint8Array(width * height);
+  
+  const isBackgroundPixel = (idx) => {
+    const r = data[idx * 4];
+    const g = data[idx * 4 + 1];
+    const b = data[idx * 4 + 2];
+    const a = data[idx * 4 + 3];
+    // Transparent pixels or white/near-white pixels count as background
+    if (a < 128) return true;
+    return r >= bgThreshold && g >= bgThreshold && b >= bgThreshold;
+  };
+
+  // BFS from all edge pixels
+  const queue = [];
+  
+  // Add all edge pixels to queue if they're background-like
+  for (let x = 0; x < width; x++) {
+    if (isBackgroundPixel(x)) { queue.push(x); isBackground[x] = 1; }
+    const bottomIdx = (height - 1) * width + x;
+    if (isBackgroundPixel(bottomIdx)) { queue.push(bottomIdx); isBackground[bottomIdx] = 1; }
+  }
+  for (let y = 1; y < height - 1; y++) {
+    const leftIdx = y * width;
+    if (isBackgroundPixel(leftIdx)) { queue.push(leftIdx); isBackground[leftIdx] = 1; }
+    const rightIdx = y * width + width - 1;
+    if (isBackgroundPixel(rightIdx)) { queue.push(rightIdx); isBackground[rightIdx] = 1; }
+  }
+
+  // BFS flood fill
+  while (queue.length > 0) {
+    const idx = queue.shift();
+    const x = idx % width;
+    const y = Math.floor(idx / width);
+    
+    const neighbors = [
+      y > 0 ? idx - width : -1,           // up
+      y < height - 1 ? idx + width : -1,  // down
+      x > 0 ? idx - 1 : -1,               // left
+      x < width - 1 ? idx + 1 : -1,       // right
+    ];
+    
+    for (const nIdx of neighbors) {
+      if (nIdx >= 0 && !isBackground[nIdx] && isBackgroundPixel(nIdx)) {
+        isBackground[nIdx] = 1;
+        queue.push(nIdx);
+      }
+    }
+  }
+
+  return isBackground;
+}
+
 async function imageToAscii(imagePath, options = {}) {
   const {
     width = 80,
@@ -77,13 +131,20 @@ async function imageToAscii(imagePath, options = {}) {
     .raw()
     .toBuffer({ resolveWithObject: true });
 
+  // Pre-compute background pixels if bgTransparent is enabled
+  let backgroundPixels = null;
+  if (bgTransparent) {
+    backgroundPixels = findBackgroundPixels(data, info.width, info.height, bgThreshold);
+  }
+
   let result = '';
   
   for (let y = 0; y < info.height; y++) {
     let line = '';
     
     for (let x = 0; x < info.width; x++) {
-      const idx = (y * info.width + x) * 4;
+      const pixelIdx = y * info.width + x;
+      const idx = pixelIdx * 4;
       const r = data[idx];
       const g = data[idx + 1];
       const b = data[idx + 2];
@@ -91,13 +152,13 @@ async function imageToAscii(imagePath, options = {}) {
 
       // Handle transparency
       if (a < 128) {
-        line += ' ';
+        line += RESET + ' ';
         continue;
       }
 
-      // Handle white background as transparent
-      if (bgTransparent && r >= bgThreshold && g >= bgThreshold && b >= bgThreshold) {
-        line += ' ';
+      // Handle background (only edge-connected white regions)
+      if (bgTransparent && backgroundPixels[pixelIdx]) {
+        line += RESET + ' ';
         continue;
       }
 
